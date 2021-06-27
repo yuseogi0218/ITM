@@ -46,22 +46,26 @@ Instructor : Lee youn ho
 |2021-03-22|13:00 ~ 16:00|Check the testing case and modify some part|It works as “cd” and “history <number>” command.|
 ||16:00 ~ 17:15|Write the readme and documentation for question and testcase.||
 |2021-03-23|19:00 ~ 19:30|According to the updated instructions, the code, read me, and report have been revised.||
-1. Total hours spent.  Try to be honest and do not exaggerate here. 
+5. Total hours spent.  Try to be honest and do not exaggerate here. 
    1. The total hours : About 16hours 
-
-![](Aspose.Words.1291ac8a-c5fe-495a-9bd9-d8d7a334cd5b.001.png)**Test description and Result**
-
+   
+**Test description and Result**
+   
+   
 1. The shell program can compile and run successfully and ProcessBuilder object is correctly created, ps, ls, and cat command works. And, also “quit” command works well.
 
 
 
+![](Aspose.Words.1291ac8a-c5fe-495a-9bd9-d8d7a334cd5b.001.png)
 
 
 
 
 
 
-1. When type “cd” and “pwd”, you can check the directory was changed to /home/user. Also, it shows handling absolute path, relative path, and error .
+2. When type “cd” and “pwd”, you can check the directory was changed to /home/user. Also, it shows handling absolute path, relative path, and error .
+
+
 
 ![](Aspose.Words.1291ac8a-c5fe-495a-9bd9-d8d7a334cd5b.002.png)
 
@@ -71,14 +75,6 @@ Instructor : Lee youn ho
 
 
 
+3.  Following test case #2, When type “history” or “history <number>”, the shell print out of history of commands. And, when type “history !!” or “history !<number>”, the shell run the corresponding command in the history. 
 
-
-
-
-
-3. Test case #3 will be in next page.
-
-
-
-1. ![](Aspose.Words.1291ac8a-c5fe-495a-9bd9-d8d7a334cd5b.003.png) Following test case #2, When type “history” or “history <number>”, the shell print out of history of commands. And, when type “history !!” or “history !<number>”, the shell run the corresponding command in the history. 
-
+![](Aspose.Words.1291ac8a-c5fe-495a-9bd9-d8d7a334cd5b.003.png)
