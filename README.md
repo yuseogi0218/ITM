@@ -8,3 +8,4 @@ for ITM program in SeoulTech
     - [NaiveBayes / DecisionTree / k-MeansClustering](https://github.com/yuseogi0218/ITM/blob/main/3-1/DataMining-NaiveBayes%2C%20DecisionTree%2C%20k-meansClustering/Assignment02.md)
   - ### OperatingSystemDesign
     - [DoublyLinkedList](https://github.com/yuseogi0218/ITM/blob/main/3-1/OperatingSystemDesign-DoublyLinkedList/Lab0/Lab0.md)
+    - [SimpleShell](https://github.com/yuseogi0218/ITM/blob/main/3-1/OperatingSystemDesign-SimpleShell/(update)1_Creating_Shell_Using_Java/(update)1_Creating_Shell_Using_Java.md)
