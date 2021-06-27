@@ -1,4 +1,7 @@
-﻿**Assignment 0 – Implementation of basic data structures**
+[report](https://github.com/yuseogi0218/ITM/blob/main/3-1/OperatingSystemDesign-DoublyLinkedList/report/report.md)
+[code](https://github.com/yuseogi0218/ITM/blob/main/3-1/OperatingSystemDesign-DoublyLinkedList/17102063.c)
+
+**Assignment 0 – Implementation of basic data structures**
 
 ### 1. (Implementation of a doubly linked list) We can represent a polynomial with a form of a doubly linked list using the following structure:
 
