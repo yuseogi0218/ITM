@@ -86,5 +86,12 @@ Instructor : Lee youn ho
 
 Test description and result
 
-1. ![](Aspose.Words.c8338ed8-1187-4538-be6c-140a10f62dfd.001.png)I tested the example of instructions of implementation assignment#2. First, we have to input number of threads, life time of each threads, life tome of the program, and the way of return PID. After that you can see the created sample time, and also, can see result of program that is consist of thread created and destroyed. ![](Aspose.Words.c8338ed8-1187-4538-be6c-140a10f62dfd.002.png)
-1. In this case, the function of getPIDWait() was tested by reducing the number of available pids and increasing the number of threads to be created. Here, there are only 7 pids available. In other words, the thread after thread7 using last available pid value ​​for the first time waits until the previous thread is terminated.
+1. I tested the example of instructions of implementation assignment#2. First, we have to input number of threads, life time of each threads, life tome of the program, and the way of return PID. After that you can see the created sample time, and also, can see result of program that is consist of thread created and destroyed.
+
+![](Aspose.Words.c8338ed8-1187-4538-be6c-140a10f62dfd.002.png)
+
+
+2. In this case, the function of getPIDWait() was tested by reducing the number of available pids and increasing the number of threads to be created. Here, there are only 7 pids available. In other words, the thread after thread7 using last available pid value ​​for the first time waits until the previous thread is terminated.
+
+
+![](Aspose.Words.c8338ed8-1187-4538-be6c-140a10f62dfd.001.png)
