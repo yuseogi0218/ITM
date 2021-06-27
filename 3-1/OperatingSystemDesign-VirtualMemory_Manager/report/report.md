@@ -12,7 +12,8 @@ Instructor : Lee youn ho
 
 **Problem:**
 
-1. ![](Aspose.Words.bff85270-5faa-4bfc-b427-610e02b28df1.001.png)**Analyze the source codes in the project to understand how the required functions are implemented.**
+**1. Analyze the source codes in the project to understand how the required functions are implemented.**
+![](Aspose.Words.bff85270-5faa-4bfc-b427-610e02b28df1.001.png)
 
 Virtual Memory Manager is Java Program that translates logical addresses to physical addresses for a Virtual address space of size 216 = 65,536bytes. The program will read from ‘InputFile.txt’ containing logical addresses and, first check the TLB as well as Page Table and then, check the ‘BACKING\_STORE’. After that, program will translate each logical address to its corresponding physical address and output is Virtual and Physical address also, the value of the byte stored at the translated physical address. The left figure is the whole structure of AddressTranslator.java that is the main java class file. And there are several classes that support the AddressTranslator.java. BackStore.java / PageTable.java / PhysicalMemory.java / TLB.java. 
 
