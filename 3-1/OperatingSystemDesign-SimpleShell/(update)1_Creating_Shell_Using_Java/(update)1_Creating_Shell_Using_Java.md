@@ -15,7 +15,8 @@ We will complete the project described in page 149 to 152. It gives a good start
 1. Add code to your project so that if the command entered is “**exit**” or “**quit**” the shell outputs “Goodbye.” And exits the program.  You can use **System.exit(0)** to exit your running program.  It may be better if the code is in front of the codes that handle **ProcessBuilder** object. 
 1. Next, get your shell to successfully change directories using the cd command.  To do this, you will need to use the directory (File directory) method of the **ProcessBuilder** project, and you will also need to have a File object that keeps track of the current directory.  For example, if you are in your home directory and it contains a directory called Project1, and you type:
 
-cd /home/**user[^1]**/ Project1
+cd /home/**user**/ Project1
+    ` `**user** is assumed to be your username. 
 
 `	`to get into your Project1 directory.  If you just type cd
 
@@ -117,4 +118,3 @@ Note
 ` `PAGE   \\* MERGEFORMAT 1
 
 
-[^1]: ` `**user** is assumed to be your username. 
