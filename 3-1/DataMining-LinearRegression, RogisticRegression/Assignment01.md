@@ -799,6 +799,8 @@ trnX,valX,trnY,valY=train_test_split(X,y,test_size=0.2,random_state=10, stratify
 
 ### LogisticRegression을 활용하여 cutoff를 다르게 하며 input variable을 각 class로 분류
 
+### train data의 y와 예측 y를 비교하여 accuracy측정
+
 
 ```python
 cutoff = np.arange(0.10, 1, 0.05)
