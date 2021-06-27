@@ -27,7 +27,7 @@ cd /home/**user[^1]**/ Project1
 
 `	`will not work as expected. 
 
-1. Get your program working with relative paths.  For instance, make it so typing:
+11. Get your program working with relative paths.  For instance, make it so typing:
 
 cd Project 1
 
@@ -37,13 +37,13 @@ cd Project 1
 
 `	`should work as expected in this case. 
 
-1. Add some error/exception handling and do it gracefully.  For instance, if a user types in 
+12. Add some error/exception handling and do it gracefully.  For instance, if a user types in 
 
 cd fakeDirectory
 
 `	`and it does not exist, you should tell the user instead of crashing with an exception.  If I can crash your program by trying to use your shell by doing normal things, you won’t get these final points. 
 
-1. Adding a History Feature: Many UNIX shells provide a history feature that allows users to see the history of commands they have entered and to return a command from that history. The history includes all commands that have been entered by the user since the shell was invoked. For example, if the user entered the *history* command and saw as output:
+13. Adding a History Feature: Many UNIX shells provide a history feature that allows users to see the history of commands they have entered and to return a command from that history. The history includes all commands that have been entered by the user since the shell was invoked. For example, if the user entered the *history* command and saw as output:
 
 0 pwd
 
