@@ -1,4 +1,7 @@
-﻿Programming Assignment II
+## [code](https://github.com/yuseogi0218/ITM/blob/main/3-1/OperatingSystemDesign-ProcessID_Manager/Assignment2.java)
+## [report](https://github.com/yuseogi0218/ITM/blob/main/3-1/OperatingSystemDesign-ProcessID_Manager/report/report.md)
+
+Programming Assignment II
 
 Designing a pid Manager and its test program
 
@@ -9,19 +12,7 @@ We will complete the project shown in the attached image file. (Check the attach
 
 1. Before going to the main problem. You first need to implement a test program with which you can test the validity of the pid Manager you will implement. The program simply takes the number of threads created and the life time of the program (i.e. how many seconds the program will be running). It also takes the life time of a thread while the program is running. While the program is running, threads are created in a random time and simply doing nothing until it will be destroyed. The output of the program will be as follows:
 
-Test program is initialized with 10 thread and 60 seconds, with the life time 10 seconds of each thread
 
-Thread 1 created at Second 10
-
-Thread 2 created at Second 15
-
-Thread 1 destroyed at Second 20
-
-Thread 3 created at Second 21
-
-….
-
-60 seconds has passed… Program ends
 
 ![](Aspose.Words.a2a2e296-9494-47b7-932e-ae21493539c6.001.png)
 
