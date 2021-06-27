@@ -1,5 +1,6 @@
-[report](https://github.com/yuseogi0218/ITM/blob/main/3-1/OperatingSystemDesign-DoublyLinkedList/report/report.md)
-[code](https://github.com/yuseogi0218/ITM/blob/main/3-1/OperatingSystemDesign-DoublyLinkedList/17102063.c)
+## [report](https://github.com/yuseogi0218/ITM/blob/main/3-1/OperatingSystemDesign-DoublyLinkedList/report/report.md)
+
+## [code](https://github.com/yuseogi0218/ITM/blob/main/3-1/OperatingSystemDesign-DoublyLinkedList/17102063.c)
 
 **Assignment 0 – Implementation of basic data structures**
 
