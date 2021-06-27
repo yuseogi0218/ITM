@@ -1,4 +1,8 @@
-﻿Programming Assignment I							(3rd week)
+## [code](https://github.com/yuseogi0218/ITM/blob/main/3-1/OperatingSystemDesign-SimpleShell/SimpleShell.java)
+## [readme](https://github.com/yuseogi0218/ITM/blob/main/3-1/OperatingSystemDesign-SimpleShell/report/readme.md)
+## [report](https://github.com/yuseogi0218/ITM/blob/main/3-1/OperatingSystemDesign-SimpleShell/readme/report.md)
+ 
+## Programming Assignment I							(3rd week)
 
 ` `Creating a Shell Interface Using Java  (A modified version from [www.utc.edu](http://www.utc.edu) )
 
