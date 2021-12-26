@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>T8N5</title>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ra9eo57cpb&submodules=geocoder"></script>
+	<script  src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<link rel="shortcut icon" href="/resources/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+    <style>
+
+        @import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
+        body {
+          font-family: "Noto Sans KR", sans-serif !important;
+          letter-spacing: 105%;
+        }
+
+        .search {
+            position : absolute;
+            z-index:100;
+            display:flex;
+            flex:nowrap;
+            width:80%;
+            margin:30px 40px;
+        }
+
+        #searchbox {
+            font-weight:900;
+            background-color:#fff;
+            width:40%;
+            min-width:300px;
+            height:50px;
+            padding:0 20px;
+            margin-right:8px;
+            border-radius:15px;
+            border:none;
+            box-shadow:0px 4px 15px 1px rgba(0, 0, 0, 0.2);
+            line-height: 55px;
+        }
+
+        #submit {
+            content:"\f002";
+            width:50px;
+            border-radius:15px;
+            border:none;
+            margin-left:-60px;
+            font-family: "Font Awesome 5 Free";
+            color:#000;
+            font-weight:900;
+            background-color : transparent;
+            height:50px;
+        }
+        #location {
+            width:40px;
+            height:40px;
+            margin-left:-40px;
+            margin-top:60px;
+            border-radius:10px;
+            background-color: #fff;
+            display:inline-flex;
+            justify-content: center;
+            vertical-align: center;
+            align-items: center;
+            box-shadow:0px 4px 15px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        #legend {
+        	height:20%;
+        	position:absolute;
+        	bottom:0;
+        	z-index: 99;
+        	margin : 0 0 30px 30px;
+        }
+
+        #address {
+        	background: none;
+        	border:none;
+        	font-size:16px;
+        	width:85%;
+        }
+
+        @media (max-width: 500px) {
+
+        .search {
+            margin-left:0%;
+            margin-top:30px;
+            position : absolute;
+            z-index:100;
+            display:flex;
+            flex-wrap: nowrap;
+            justify-content: center;
+            width:100%;
+        }
+
+        #searchbox {
+            font-weight:900;
+            background-color:#fff;
+            width:75%;
+            min-width:inherit;
+            height:50px;
+            padding:0 20px;
+            border-radius:15px;
+            border:none;
+            box-shadow:0px 4px 15px 1px rgba(0, 0, 0, 0.2);
+            line-height: 50px;
+            margin-right:initial;
+        }
+
+        #submit {
+            content:"\f002";
+            width:50px;
+            border-radius:15px;
+            position:absolute;
+            right:0;
+            border:none;
+            margin-right:30px;
+            font-family: "Font Awesome 5 Free";
+            color:#000;
+            font-weight:900;
+            background-color : transparent;
+            height:50px;
+        }
+
+        #legend {
+        	height:20%;
+        	position:absolute;
+        	bottom:0;
+        	z-index: 99;
+        	margin : 0 0 30px 30px;
+        }
+
+        #address {
+        	background: none;
+        	border:none;
+        	font-size:16px;
+        	width:74%;
+        }
+
+        }
+
+        /*#submit:hover {
+            background-color:#4dcec1;
+            color:white;
+        }*/
+        input:focus {
+            outline: none;
+        }
+        textarea:focus {
+            outline: none;
+        }
+
+        #map {
+            width:99vw;height:98vh;
+        }
+        #map:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+	<form action="" method="get">
+
+	</form>
+
+    <div class="search">
+        <label id="searchbox">
+            T8N5  |
+            <input id="address" type="text" placeholder="검색할 주소" value="공릉로 41가길 19">
+        </label>
+            <!-- <i class="fas fa-search"></i> -->
+            <input id="submit" type="button" value="&#xf002;">
+        <div id="location"> <i class="fas fa-location-arrow" style="font-size:12px;"></i> </div>
+    </div>
+    
+    <div id="map"></div>
+
+    <img id = "legend" src="legend.png">
+
+
+<script>
+var map = new naver.maps.Map("map", {
+    center: new naver.maps.LatLng(37.624569, 127.078523),
+    zoom: 17,
+    zoomControl:true,
+    zoomControlOptions : {
+    	position:naver.maps.Position.RIGHT_CENTER,
+    	style:naver.maps.ZoomControlStyle.LARGE
+    },
+    minZoom:11,
+    maxZoom:20
+    //mapTypeControl: true
+});
+
+var infoWindow = new naver.maps.InfoWindow({
+    anchorSkew: false,
+    disableAnchor: true,
+    borderColor:"rgba(0,0,0,0)",
+    backgroundColor:"rgba(0,0,0,0)"
+});
+
+
+map.setCursor('pointer');
+
+map.addListener('idle', function(changed) {
+	information();
+	// alert("it changed!");
+	myAddress()
+
+
+
+});
+
+
+function onSuccessGeolocation(position) {
+
+    // infoWindow.close();
+
+    var location = new naver.maps.LatLng(position.coords.latitude,
+                                         position.coords.longitude);
+
+    map.setCenter(location); // 얻은 좌표를 지도의 중심으로 설정합니다.
+    //map.setZoom(17); // 지도의 줌 레벨을 변경합니다.
+
+    infoWindow.setContent(
+        '<div style="padding:10px;min-width:200px;line-height:100%; width:100px; font-size:12px; background-color:#fff; border-radius:10px; box-shadow:0px 4px 15px 1px rgba(0,0,0,0.2);"> <h4 style="margin-top:5px;">검색 주소 : </h4></div>'
+    );
+
+    //infoWindow.open(map, location);
+    console.log('Coordinates: ' + location.toString());
+
+    mylocation();
+    myAddress()
+
+    function mylocation() {
+    	console.log("gps location");
+
+    	var markerMy=null;
+
+		var markerMy = new naver.maps.Marker({
+			position : new naver.maps.LatLng(position.coords.latitude, position.coords.longitude),
+			map:map,
+			icon: {
+				content:['<div style="background-color:#4285f4; border:solid 3px #ffffff; box-shadow:0px 0px 15px rgba(66,133,244,0.5); width:20px; height:20px; border-radius:30px; font-size:16px; line-height:28px; text-align:center;"> </div>'].join(''),
+				size: new naver.maps.Size(38,58),
+			},
+		});
+
+	}
+
+}
+
+function onErrorGeolocation() {
+    var center = map.getCenter();
+
+    infoWindow.setContent('<div style="padding:20px;">' +
+        '<h5 style="margin-bottom:5px;color:#f00;">Geolocation failed!</h5>'+ "latitude: "+ center.lat() +"<br />longitude: "+ center.lng() +'</div>');
+
+    //infowindow.open(map, center);
+}
+
+
+ $(document).ready(function() {
+        //$("#btn").bind("click",function(){alert("click!");});
+        //일단 바인드로 클릭 이벤트를 연결하여 얼럿이 뜨게 만들어 놓는다.
+        //클릭 이벤트는 아래와 같이 다양한 방법으로 적용이 가능 하다.
+        //$("#btn").click(function(){alert("click!");});
+        //$("#my .hover").click(function(){alert("click!");});
+        //$(".hover").click(function(){alert("click!");});
+        //$("#input eq:0").click(function(){alert("click!");});
+        //$("#my input[type=button]").one("click",function(){alert("click!");});
+        $("#location").trigger("click");
+        //그리고 트리거로 페이지가 로딩되자마자 실행이 되도록 한다.
+        //트리거는 페이지가 로드되자마자 실행되게 한다.
+        //트리거를 실행 하려면 실행될 이벤트가 먼저 구현되어 있어야 한다.
+        });
+
+$('#location').on("click", function() {
+    if (navigator.geolocation) {
+        /**
+         * navigator.geolocation 은 Chrome 50 버젼 이후로 HTTP 환경에서 사용이 Deprecate 되어 HTTPS 환경에서만 사용 가능 합니다.
+         * http://localhost 에서는 사용이 가능하며, 테스트 목적으로, Chrome 의 바로가기를 만들어서 아래와 같이 설정하면 접속은 가능합니다.
+         * chrome.exe --unsafely-treat-insecure-origin-as-secure="http://example.com"
+         */
+        navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
+
+
+    } else {
+        var center = map.getCenter();
+        infoWindow.setContent('<div style="padding:20px;"><h5 style="margin-bottom:5px;color:#f00;">Geolocation not supported</h5></div>');
+        //infoWindow.open(map, center);
+    }
+});
+
+
+function myAddress() {
+	naver.maps.Service.reverseGeocode({
+        location: new naver.maps.LatLng(map.center.y, map.center.x),
+    }, function(status, response) {
+        if (status !== naver.maps.Service.Status.OK) {
+            return alert('Something wrong!');
+        }
+
+        var result = response.result, // 검색 결과의 컨테이너
+            items = result.items; // 검색 결과의 배열
+
+        console.log(result);
+        console.log(items);
+        console.log(items[1].address);
+
+        var myAddressText = items[1].address ;
+        var myAddressTextShort ;
+        myAddressTextShort = myAddressText.replace("서울특별시 ", "");
+        myAddressTextShort = myAddressTextShort.replace("종로구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("중구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("용산구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("성동구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("광진구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("동대문구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("중랑구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("성북구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("강북구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("도봉구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("노원구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("은평구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("서대문구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("마포구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("양천구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("강서구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("구로구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("금천구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("영등포구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("동작구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("관악구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("서초구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("강남구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("송파구 ", "");
+        myAddressTextShort = myAddressTextShort.replace("강동구 ", "");
+
+        document.getElementById("address").value = myAddressTextShort;
+
+        // do Something
+    });
+}
+
+
+function searchCoordinateToAddress(latlng) {
+
+    // infoWindow.close();
+
+    naver.maps.Service.reverseGeocode({
+        coords: latlng,
+        orders: [
+            naver.maps.Service.OrderType.ADDR,
+            naver.maps.Service.OrderType.ROAD_ADDR
+        ].join(',')
+    }, function(status, response) {
+        if (status === naver.maps.Service.Status.ERROR) {
+            return alert('Something Wrong!');
+        }
+
+        var items = response.v2.results,
+            address = '',
+            htmlAddresses = [];
+
+        for (var i=0, ii=items.length, item, addrType; i<ii; i++) {
+            item = items[i];
+            address = makeAddress(item) || '';
+            addrType = item.name === 'roadaddr' ? '[도로명 주소]' : '[지번 주소]';
+
+            htmlAddresses.push(addrType +' '+ address);
+        }
+
+        return address;
+
+        infoWindow.setContent([
+
+            '<div style="padding:10px;min-width:200px;line-height:100%; width:100px; font-size:12px; background-color:#fff; border-radius:10px; box-shadow:0px 4px 15px 1px rgba(0,0,0,0.2);">',
+            '<h4 style="margin-top:5px;">검색 좌표</h4><br />',
+            htmlAddresses.join('<br />'),
+            '</div>'
+        ].join('\n'));
+
+        //infoWindow.open(map, latlng);
+    });
+}
+
+function searchAddressToCoordinate(address) {
+    naver.maps.Service.geocode({
+        query: address
+    }, function(status, response) {
+        if (status === naver.maps.Service.Status.ERROR) {
+            return alert('Something Wrong!');
+        }
+
+        if (response.v2.meta.totalCount === 0) {
+            return alert('도로명주소를 정확히 입력해주세요.');
+        }
+
+        var htmlAddresses = [],
+            item = response.v2.addresses[0],
+            point = new naver.maps.Point(item.x, item.y);
+
+        if (item.roadAddress) {
+            htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
+        }
+
+        if (item.jibunAddress) {
+            htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
+        }
+
+        // if (item.englishAddress) {
+        //     htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
+        // }
+
+        infoWindow.setContent([
+            '<div style="padding:10px;min-width:200px;line-height:100%; width:100px; font-size:12px; background-color:#fff; border-radius:10px; box-shadow:0px 4px 15px 1px rgba(0,0,0,0.2);">',
+            '<h4 style="margin-top:5px;">검색 주소 : '+ address +'</h4><br />',
+            htmlAddresses.join('<br />'),
+            '</div>'
+        ].join('\n'));
+
+        map.setCenter(point);
+        //infoWindow.open(map, point);
+    });
+}
+
+function initGeocoder() {
+    if (!map.isStyleMapReady) {
+        return;
+    }
+
+    map.addListener('click', function(e) {
+        searchCoordinateToAddress(e.coord);
+    });
+
+    $('#address').on('keydown', function(e) {
+        var keyCode = e.which;
+
+        if (keyCode === 13) { // Enter Key
+            searchAddressToCoordinate($('#address').val());
+        }
+    });
+
+    $('#submit').on('click', function(e) {
+        e.preventDefault();
+
+        searchAddressToCoordinate($('#address').val());
+    });
+
+    searchAddressToCoordinate('공릉로 41가길 19');
+}
+
+function makeAddress(item) {
+    if (!item) {
+        return;
+    }
+
+    var name = item.name,
+        region = item.region,
+        land = item.land,
+        isRoadAddress = name === 'roadaddr';
+
+    var sido = '', sigugun = '', dongmyun = '', ri = '', rest = '';
+
+    if (hasArea(region.area1)) {
+        sido = region.area1.name;
+    }
+
+    if (hasArea(region.area2)) {
+        sigugun = region.area2.name;
+    }
+
+    if (hasArea(region.area3)) {
+        dongmyun = region.area3.name;
+    }
+
+    if (hasArea(region.area4)) {
+        ri = region.area4.name;
+    }
+
+    if (land) {
+        if (hasData(land.number1)) {
+            if (hasData(land.type) && land.type === '2') {
+                rest += '산';
+            }
+
+            rest += land.number1;
+
+            if (hasData(land.number2)) {
+                rest += ('-' + land.number2);
+            }
+        }
+
+        if (isRoadAddress === true) {
+            if (checkLastString(dongmyun, '면')) {
+                ri = land.name;
+            } else {
+                dongmyun = land.name;
+                ri = '';
+            }
+
+            if (hasAddition(land.addition0)) {
+                rest += ' ' + land.addition0.value;
+            }
+        }
+    }
+
+    return [sido, sigugun, dongmyun, ri, rest].join(' ');
+}
+
+function hasArea(area) {
+    return !!(area && area.name && area.name !== '');
+}
+
+function hasData(data) {
+    return !!(data && data !== '');
+}
+
+function checkLastString (word, lastString) {
+    return new RegExp(lastString + '$').test(word);
+}
+
+function hasAddition (addition) {
+    return !!(addition && addition.value);
+}
+
+naver.maps.onJSContentLoaded = initGeocoder;
+naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
+
+
+var httpRequest;
+var httpRequest1;
+
+
+function information() {
+	var geoinfo = "latitude="+map.center.y+"&longitude="+map.center.x+"&degree=7";
+	httpRequest = new XMLHttpRequest();
+	if (!httpRequest) {
+		alert('fail');
+		return false;
+	}
+	httpRequest.onreadystatechange = makearray;
+	httpRequest.open('GET', '/v1/info?'+geoinfo);
+	httpRequest.send();
+};
+
+
+//taxiStop
+function informationTaxi() {
+	var geoinfo = "latitude="+map.center.y+"&longitude="+map.center.x+"&degree=5";
+	httpRequest1 = new XMLHttpRequest();
+	if (!httpRequest1) {
+		alert('fail');
+		return false;
+	}
+	httpRequest1.onreadystatechange = makearray_taxi;
+	httpRequest1.open('GET', '/v1/station?'+geoinfo);
+	httpRequest1.send();
+};
+
+
+var result = new Object() ;
+var result_taxi = new Object() ;
+
+function makearray() {
+	if (httpRequest.readyState == XMLHttpRequest.DONE) {
+		//infoArray = JSON.parse(httpRequest.responseText); 
+		result = JSON.parse(httpRequest.responseText);
+	}
+	makeWindow();
+};
+
+function makearray_taxi() {
+	if (httpRequest1.readyState == XMLHttpRequest.DONE) {
+		//infoArray = JSON.parse(httpRequest.responseText); 
+		result_taxi = JSON.parse(httpRequest1.responseText);
+	}
+	makeWindowTaxi();
+};
+
+window.onload=information();
+window.onload=informationTaxi();
+
+
+function makeWindow() {
+
+	var len = Object.keys(result).length;
+	for (i=0; i <len; i++) {
+		var marker = new naver.maps.Marker({
+			position : new naver.maps.LatLng(result[i].std_lat, result[i].std_lng),
+			map:map,
+			icon: {
+				content:['<div style="background-color:#4dcec1; border:solid 3px #ffffff; color:#ffffff; width:30px; height:30px; border-radius:30px; font-size:16px; line-height:28px; text-align:center;">', result[i].cnt, '</div>'].join(''),
+				size: new naver.maps.Size(38,58),
+			},
+		});
+		// var infowindow1 = new naver.maps.InfoWindow({
+		// 	content:'<div>',result[i].cnt,'</div>'
+		// })
+		// infowindow1,open(map, marker);
+	};
+};
+
+
+function makeWindowTaxi() {
+	var len1 = Object.keys(result_taxi).length;
+	for (i=0; i <len1; i++) {
+		var marker1 = new naver.maps.Marker({
+			position : new naver.maps.LatLng(result_taxi[i].lat, result_taxi[i].lng),
+			map:map,
+			icon: {
+				content:['<div style="background-color:#dd4124; border:solid 3px #ffffff; color:#ffffff; width:30px; height:30px; border-radius:30px; font-size:16px; line-height:28px; text-align:center;"> T </div>'].join(''),
+				size: new naver.maps.Size(38,58),
+			},
+		});
+		// var infowindow1 = new naver.maps.InfoWindow({
+		// 	content:'<div>',result[i].cnt,'</div>'
+		// })
+		// infowindow1,open(map, marker);
+	};
+};
+
+
+
+</script>
+</body>
+</html>

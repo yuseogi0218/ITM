@@ -1,0 +1,4 @@
+ec2-15-164-96-53.ap-northeast-2.compute.amazonaws.com
+
+
+username : ubuntu
