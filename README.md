@@ -21,3 +21,5 @@ for ITM program in SeoulTech
 - ## 4-1
   - ### Information Security
     - [sentiment classification with homomorphic encryption](https://github.com/yuseogi0218/sentiment_classification_with_HE)
+- ## Capstone Design
+  - ### [네이버 라이브 커머스 채팅 UX 향상](https://github.com/orgs/Live-commerce-UX-enhancement/repositories)
