@@ -18,3 +18,6 @@ for ITM program in SeoulTech
   - ### Mobile Programming
     - [Running Life Kotlin](https://github.com/RunningLifea/RunningLife)
     - [Running Life Server(Spring)](https://github.com/RunningLifea/RunningLifeServer)
+- ## 4-1
+  - ### Information Security
+    - [sentiment classification with homomorphic encryption](https://github.com/yuseogi0218/sentiment_classification_with_HE)
